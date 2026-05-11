@@ -173,7 +173,7 @@ This project does not represent real institutional audit outputs or regulatory a
 
 # 👨‍💻 Author
 
-Developed by **Subha Dip**
+Developed by **Subhadip Kumar**
 
 BTech IT • BFSI Strategy • AI Governance • Digital Innovation
 
