@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ESG Audit Engine — FinWithDip</title>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+    #scorecard-result{
+      display:none;
+    }
+
+    #scorecard-result.visible{
+      display:block;
+      animation:fadeUp .55s ease;
+    }
+
+    .gw-card{
+      margin-bottom:14px;
+      padding:14px;
+      background:rgba(255,255,255,.02);
+      border-radius:10px;
+      border:1px solid var(--glass-border);
+    }
+
+    .gw-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      margin-bottom:6px;
+    }
+
+    .gw-claim{
+      font-family:'JetBrains Mono',monospace;
+      font-size:13px;
+      color:var(--text);
+    }
+
+    .gw-reason{
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .sc-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:24px;
+    }
+    @media(max-width:768px){
+
+  .container{
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+  .sc-grid{
+    grid-template-columns:1fr;
+  }
+  .sc-val{
+  font-size:28px;
+}
+
+}
+
+    .sc-cell{
+      text-align:center;
+      padding:20px;
+      background:rgba(255,255,255,.02);
+      border-radius:10px;
+      border:1px solid transparent;
+    }
+
+    .sc-val{
+      font-size:36px;
+      font-family:'Syne',sans-serif;
+      font-weight:800;
+    }
+
+    .sc-label{
+      font-size:11px;
+      color:var(--muted);
+      margin-top:6px;
+    }
+
+    .gw-card,
+    .stat-card,
+    .sc-cell{
+      transition:all .3s ease;
+    }
+
+    .gw-card:hover,
+    .stat-card:hover,
+    .sc-cell:hover{
+      transform:translateY(-5px);
+      box-shadow:0 18px 50px rgba(16,185,129,.12);
+      border-color:rgba(16,185,129,.25);
+    }
+    .btn-primary{
+  transition:all .3s ease;
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 18px 45px rgba(124,58,237,.35);
+}
+  </style>
+</head>
+
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">F</div>
+      <span class="nav-logo-text">
+        Fin<span class="grad">WithDip</span>
+      </span>
+    </a>
+
+    <div class="nav-links">
+  <a href="index.html" class="nav-link" data-page="index.html">Platform</a>
+  <a href="dashboard.html" class="nav-link" data-page="dashboard.html">Dashboard</a>
+  <a href="silver.html" class="nav-link" data-page="silver.html">Silver Economy</a>
+  <a href="esg.html" class="nav-link" data-page="esg.html">ESG Audit</a>
+  <a href="fraud.html" class="nav-link" data-page="fraud.html">AI Fraud</a>
+  <a href="cases.html" class="nav-link" data-page="cases.html">Case Studies</a>
+</div>
+
+    <a href="index.html#audit-section" class="nav-cta">
+      Run Audit ↗
+    </a>
+
+  </div>
+</nav>
+
+<!-- LIVE ESG FEED -->
+<section class="threat-feed">
+  <div class="threat-track">
+    ESG ALERT • SEBI BRSR Core enforcement approaching • Greenwashing scrutiny increasing • ISSB climate disclosures gaining momentum • Sustainable finance adoption accelerating • Transition-risk exposure rising across Indian BFSI • ESG-linked bond market expanding rapidly
+  </div>
+</section>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="container">
+
+    <span class="tag tag-green page-tag">
+      Module 02
+    </span>
+
+    <h1 class="page-title">
+      🌱 ESG Audit <span class="grad-green">Engine</span>
+    </h1>
+
+    <p class="page-sub">
+      SEBI BRSR Core framework compliance assessment,
+      greenwashing detection, and ESG scorecard generation
+      for Indian financial institutions.
+    </p>
+
+  </div>
+</div>
+
+<div style="padding-bottom:80px;">
+  <div class="container">
+
+    <!-- STATS -->
+    <div class="grid-4" style="margin-bottom:36px;">
+
+      <div class="stat-card">
+        <div class="stat-card-orb" style="background:var(--red)"></div>
+
+        <div class="stat-label">
+          BRSR Compliance Avg
+        </div>
+
+        <div class="stat-value" style="color:var(--red)">
+          34<span style="font-size:18px;opacity:.6">%</span>
+        </div>
+
+        <div class="stat-delta down">
+          -5% vs FY25
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-orb" style="background:var(--gold)"></div>
+
+        <div class="stat-label">
+          Greenwash Risk Sector
+        </div>
+
+        <div class="stat-value" style="color:var(--gold)">
+          72<span style="font-size:18px;opacity:.6">%</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-orb" style="background:var(--green)"></div>
+
+        <div class="stat-label">
+          Green Bond Gap
+        </div>
+
+        <div class="stat-value" style="color:var(--green)">
+          ₹2.1<span style="font-size:18px;opacity:.6">Tr</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card-orb" style="background:var(--purple-light)"></div>
+
+        <div class="stat-label">
+          ESG Rating Upgrades
+        </div>
+
+        <div class="stat-value" style="color:var(--purple-light)">
+          14<span style="font-size:18px;opacity:.6">%</span>
+        </div>
+
+        <div class="stat-delta up">
+          +6% YoY
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ESG SCORECARD -->
+    <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:32px;margin-bottom:28px;">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:16px;">
+
+        <div>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px;">
+            ESG Scorecard Generator
+          </h3>
+
+          <p style="font-size:13px;color:var(--muted);">
+            Generate a board-ready ESG scorecard with compliance risk breakdown.
+          </p>
+        </div>
+
+        <button class="btn-primary" onclick="generateScorecard()" id="sc-btn">
+          ▶ Generate ESG Scorecard
+        </button>
+
+      </div>
+
+      <div id="sc-loading" style="display:none;"></div>
+
+      <div id="scorecard-result">
+
+        <div class="sc-grid">
+
+          <div class="sc-cell">
+            <div class="sc-val" style="color:var(--green)">48%</div>
+            <div class="sc-label">Sustainability Score</div>
+          </div>
+
+          <div class="sc-cell">
+            <div class="sc-val" style="color:var(--red)">34%</div>
+            <div class="sc-label">BRSR Compliance</div>
+          </div>
+
+          <div class="sc-cell">
+            <div class="sc-val" style="color:var(--gold)">72%</div>
+            <div class="sc-label">Greenwash Risk</div>
+          </div>
+
+          <div class="sc-cell">
+            <div class="sc-val" style="color:var(--purple-light)">28%</div>
+            <div class="sc-label">Transition Readiness</div>
+          </div>
+
+        </div>
+
+        <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:20px;">
+
+          <div style="font-size:10px;color:var(--green);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;">
+            Strategic Recommendation
+          </div>
+
+          <p style="font-size:13px;line-height:1.75;color:rgba(240,240,248,.82);">
+            BRSR Core compliance gap at 34% creates material regulatory risk ahead of SEBI's mandatory ESG disclosure enforcement.
+          </p>
+
+        </div>
+
+        <!-- DOWNLOAD BUTTON -->
+        <button
+          class="btn-primary"
+          onclick="downloadESGReport()"
+          style="width:100%;margin-top:20px;"
+        >
+          ↓ Download ESG Audit Report
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px;">
+        Fin<span class="grad">WithDip</span>
+      </div>
+
+      <div style="font-size:12px;color:var(--muted);">
+        BFSI Strategy · Technology · Intelligence · 2026–27
+      </div>
+    </div>
+
+    <div class="footer-note">
+      All data is simulated for demonstration purposes only.
+    </div>
+
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+
+<script>
+
+const scSteps = [
+  'Parsing BRSR Core data...',
+  'Evaluating green finance portfolio...',
+  'Scanning marketing claims...',
+  'Computing ESG scorecard...'
+];
+
+function generateScorecard(){
+
+  const btn = document.getElementById('sc-btn');
+  const ldr = document.getElementById('sc-loading');
+  const res = document.getElementById('scorecard-result');
+
+  btn.disabled = true;
+  btn.textContent = '⟳ Generating...';
+
+  res.classList.remove('visible');
+
+  ldr.style.display = 'block';
+  ldr.innerHTML = '';
+
+  scSteps.forEach((s,i)=>{
+
+    setTimeout(()=>{
+
+      ldr.innerHTML += `
+        <div class="loading-row" style="animation:fadeUp .4s ease forwards">
+          <div class="loading-dot"></div>
+          <span class="loading-text">${s}</span>
+        </div>
+      `;
+
+    }, i*380);
+
+  });
+
+  setTimeout(()=>{
+
+    ldr.style.display = 'none';
+
+    btn.disabled = false;
+    btn.textContent = '▶ Generate ESG Scorecard';
+
+    res.classList.add('visible');
+
+  }, scSteps.length*380 + 400);
+}
+
+function downloadESGReport(){
+
+  const report = `
+FINWITHDIP — ESG AUDIT REPORT
+====================================
+
+BRSR Compliance: 34%
+Greenwash Risk: 72%
+Transition Readiness: 28%
+Sustainability Score: 48%
+
+KEY FINDINGS
+-------------
+• Scope 3 emissions not disclosed
+• TCFD framework missing
+• Green finance tagging incomplete
+• ESG borrower ratings unavailable
+
+STRATEGIC RECOMMENDATIONS
+--------------------------
+1. Implement Scope 3 measurement
+2. Adopt ISSB IFRS S2 reporting
+3. Establish Chief Sustainability Office
+4. Deploy ESG risk analytics engine
+
+Generated by FinWithDip ESG Audit Engine
+`;
+
+  const blob = new Blob([report], {
+    type:'text/plain'
+  });
+
+  const a = document.createElement('a');
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download = 'FinWithDip_ESG_Report.txt';
+
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+}
+
+const observer = new IntersectionObserver(entries => {
+
+  entries.forEach(entry => {
+
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+
+  });
+
+});
+
+document.querySelectorAll('.stat-card,.gw-card,.sc-cell').forEach(el=>{
+
+  el.classList.add('fade-on-scroll');
+
+  observer.observe(el);
+
+});
+
+window.addEventListener('scroll',()=>{
+
+  const nav = document.getElementById('navbar');
+
+  if(window.scrollY > 20){
+    nav.classList.add('scrolled');
+  }else{
+    nav.classList.remove('scrolled');
+  }
+
+});
+
+</script>
+
+</body>
+</html>

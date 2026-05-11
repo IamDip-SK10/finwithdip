@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Silver Economy Audit — FinWithDip</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .solution-card { background:rgba(255,255,255,0.02); border:1px solid var(--glass-border); border-radius:12px; padding:22px; }
+    .solution-icon { font-size:30px; margin-bottom:12px; }
+    .solution-title { font-family:'Syne',sans-serif; font-weight:600; font-size:14px; margin-bottom:8px; }
+    .solution-desc { font-size:12px; color:var(--muted); line-height:1.65; margin-bottom:12px; }
+    #cog-result { display:none; }
+    #cog-result.visible { display:block; animation:fadeUp 0.5s ease; }
+    .zen-banner { background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:10px; padding:12px 20px; margin-bottom:28px; font-size:13px; color:var(--gold); display:none; }
+    .zen-banner.visible { display:block; }
+    .solution-card{
+  transition:all .3s ease;
+}
+
+.solution-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(124,58,237,0.4);
+  box-shadow:0 20px 60px rgba(124,58,237,0.14);
+}
+
+.chart-card,
+.stat-card{
+  transition:all .3s ease;
+}
+
+.chart-card:hover,
+.stat-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 18px 50px rgba(124,58,237,0.12);
+}
+.threat-feed{
+  margin-top:64px;
+}
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">F</div>
+      <span class="nav-logo-text">Fin<span class="grad">WithDip</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html"      class="nav-link" data-page="index.html">Platform</a>
+      <a href="dashboard.html"  class="nav-link" data-page="dashboard.html">Dashboard</a>
+      <a href="silver.html"     class="nav-link" data-page="silver.html">Silver Economy</a>
+      <a href="esg.html"        class="nav-link" data-page="esg.html">ESG Audit</a>
+      <a href="fraud.html"      class="nav-link" data-page="fraud.html">AI Fraud</a>
+      <a href="cases.html"      class="nav-link" data-page="cases.html">Case Studies</a>
+    </div>
+    <a href="index.html#audit-section" class="nav-cta">Run Audit ↗</a>
+  </div>
+</nav>
+<!-- LIVE ACCESSIBILITY FEED -->
+<section class="threat-feed">
+  <div class="threat-track">
+    SILVER ECONOMY ALERT • Senior banking complaints rising • RBI WCAG compliance review active • OTP friction remains highest pain-point • Voice-biometrics adoption increasing • Neuro-inclusive banking becoming strategic priority • CASA leakage risk elevated across retail banking
+  </div>
+</section>
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;">
+      <div>
+        <span class="tag tag-info page-tag">Module 01</span>
+        <h1 class="page-title">🧓 Silver Economy <span class="grad">Audit</span></h1>
+        <p class="page-sub">Evaluating digital banking UX for India's 138M senior citizens — the most under-served, highest-CASA demographic in the financial system.</p>
+      </div>
+      <!-- ZEN MODE TOGGLE -->
+      <div class="toggle-wrap" style="margin-top:16px;">
+        <span style="font-size:13px;color:var(--muted);">Zen Mode</span>
+        <button class="toggle" id="zen-toggle" onclick="toggleZen()">
+          <div class="toggle-knob"></div>
+        </button>
+        <span id="zen-label" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">OFF</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="padding-bottom:80px;">
+  <div class="container">
+
+    <div class="zen-banner" id="zen-banner">
+      ⚡ Zen Mode Active — Simulating high-contrast, reduced cognitive load interface for senior users (60+). This demonstrates how neuro-inclusive design reduces friction and improves CASA retention.
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="grid-4" style="margin-bottom:36px;">
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--gold)"></div>
+        <div class="stat-label">Senior Users (60+)</div>
+        <div class="stat-value" style="color:var(--gold)">138<span style="font-size:18px;opacity:.6">M</span></div></div>
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--purple-light)"></div>
+        <div class="stat-label">Digital Adoption</div>
+        <div class="stat-value" style="color:var(--purple-light)">28<span style="font-size:18px;opacity:.6">%</span></div>
+        <div class="stat-delta up">+4% YoY</div></div>
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--red)"></div>
+        <div class="stat-label">Complaint Share</div>
+        <div class="stat-value" style="color:var(--red)">58<span style="font-size:18px;opacity:.6">%</span></div></div>
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--cyan)"></div>
+        <div class="stat-label">CASA at Risk</div>
+        <div class="stat-value" style="color:var(--cyan)">₹4.8<span style="font-size:18px;opacity:.6">Tr</span></div></div>
+    </div>
+
+    <!-- COGNITIVE LOAD + CHECKLIST -->
+    <div class="grid-2" style="margin-bottom:28px;">
+
+      <!-- COG LOAD -->
+      <div class="chart-card" style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;">
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px;">UX Cognitive Load Analyzer</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6;">Measures friction in navigation depth, authentication steps, and information density for senior users.</p>
+
+        <button class="btn-primary" onclick="runCogLoad()" id="cog-btn">▶ Run Cognitive Load Test</button>
+
+        <div id="cog-loading" style="display:none;margin-top:20px;"></div>
+
+        <div id="cog-result">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:22px;margin-top:20px;">
+            <div style="font-size:52px;font-family:'Syne',sans-serif;font-weight:800;color:var(--red);">34</div>
+            <div>
+              <div style="font-size:15px;font-weight:600;color:var(--red);">Critical</div>
+              <div style="font-size:12px;color:var(--muted);">7 high-friction points found</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div class="prog-label"><span>Navigation Depth</span><span style="color:var(--red)">72%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="72" style="background:var(--red)"></div></div>
+            </div>
+            <div>
+              <div class="prog-label"><span>Auth Complexity</span><span style="color:var(--red)">85%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="85" style="background:var(--red)"></div></div>
+            </div>
+            <div>
+              <div class="prog-label"><span>Information Density</span><span style="color:var(--gold)">68%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="68" style="background:var(--gold)"></div></div>
+            </div>
+            <div>
+              <div class="prog-label"><span>Error Message Clarity</span><span style="color:var(--gold)">42%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="42" style="background:var(--gold)"></div></div>
+              <button class="btn-primary" style="width:100%;margin-top:20px;">
+  ↓ Download UX Audit Report
+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;">
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px;">Accessibility Gap Checklist</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">WCAG 2.2 AA + RBI Digital Banking Guidelines</p>
+        <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
+          <span style="font-size:12px;color:var(--muted);">Pass Rate</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--red);">3/12 (25%)</span>
+        </div>
+        <div style="max-height:330px;overflow-y:auto;padding-right:4px;" id="checklist"></div>
+      </div>
+    </div>
+
+    <!-- ELDER RISK SCORING -->
+    <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;margin-bottom:28px;">
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:20px;">Elder Risk Scoring Matrix</h3>
+      <div style="overflow-x:auto;">
+        <table class="fin-table">
+          <thead><tr><th>#</th><th>Risk Factor</th><th>Severity</th><th>CASA Impact</th><th>Remediation</th></tr></thead>
+          <tbody>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">01</td><td>Complex OTP flow (60s window)</td><td><span class="tag tag-high">Critical</span></td><td style="color:var(--red)">₹48Cr</td><td style="font-size:12px;color:var(--muted)">Extend to 180s + voice fallback</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">02</td><td>6-layer fund transfer navigation</td><td><span class="tag tag-high">High</span></td><td style="color:var(--red)">₹72Cr</td><td style="font-size:12px;color:var(--muted)">Quick-action home screen CTA</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">03</td><td>Font size 12px default</td><td><span class="tag tag-high">High</span></td><td style="color:var(--gold)">₹36Cr</td><td style="font-size:12px;color:var(--muted)">Minimum 16px, scalable to 24px</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">04</td><td>No voice-biometric login</td><td><span class="tag tag-med">Medium</span></td><td style="color:var(--gold)">₹29Cr</td><td style="font-size:12px;color:var(--muted)">Neural voice match integration</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">05</td><td>SOS buried in Settings > Security</td><td><span class="tag tag-med">Medium</span></td><td style="color:var(--muted)">₹14Cr</td><td style="font-size:12px;color:var(--muted)">Surface to home screen always</td></tr>
+            <tr><td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">06</td><td>Colour contrast ratio 3.1:1</td><td><span class="tag tag-high">High</span></td><td style="color:var(--gold)">₹22Cr</td><td style="font-size:12px;color:var(--muted)">Redesign to WCAG AA 4.5:1 min</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FUTURE SOLUTIONS -->
+    <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:32px;margin-bottom:28px;">
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:24px;">Future Solution Architecture</h3>
+      <div class="grid-3">
+        <div class="solution-card">
+          <div class="solution-icon">🎙️</div>
+          <div class="solution-title">Voice-Biometric Consent</div>
+          <div class="solution-desc">Replace OTP with passive voice liveness check. Reduces senior drop-off by an estimated 62%. Integrates with RBI KYC Directions 2024.</div>
+          <span class="tag tag-info" style="font-size:9px;">Neural Voice Match v3</span>
+        </div>
+        <div class="solution-card">
+          <div class="solution-icon">🧬</div>
+          <div class="solution-title">Neuro-Inclusive Banking UX</div>
+          <div class="solution-desc">One-field-at-a-time form design, progressive disclosure navigation, and predictive error prevention reduce cognitive overload by 48%.</div>
+          <span class="tag tag-info" style="font-size:9px;">UX Cognitive Engine</span>
+        </div>
+        <div class="solution-card">
+          <div class="solution-icon">🛡️</div>
+          <div class="solution-title">Elder Fraud Shield</div>
+          <div class="solution-desc">Real-time transaction counselling for amounts >₹50K, cooling-off period enforcement, and family co-authorization for large transfers.</div>
+          <span class="tag tag-info" style="font-size:9px;">Behavioural AI Layer</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXECUTIVE SUMMARY -->
+    <div class="exec-box" style="background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.18);">
+      <span class="tag tag-info" style="margin-bottom:16px;">Executive Summary · McKinsey/BCG Grade</span>
+      <p>India's Silver Economy represents a ₹4.8 trillion CASA opportunity that incumbent banks are systematically failing to retain. Our cognitive load analysis reveals that existing mobile banking interfaces impose 3–6 step authentication flows generating 58% of senior-segment complaints — directly translating into CASA ratio deterioration. Regulatory mandates under RBI's Digital Banking Guidelines (2024) require WCAG 2.2 AA compliance by Q4 FY26, yet 89% of sampled institutions remain non-compliant.</p>
+      <p>The remediation pathway involves neuro-inclusive UX redesign incorporating voice-biometric consent, progressive disclosure navigation, and behavioural anomaly detection calibrated to elder transaction patterns. Our AI TRiSM framework integration ensures that accessibility improvements do not inadvertently create new fraud vectors. Implementation of the FinWithDip Silver Audit Protocol is projected to improve senior CASA retention by ₹240Cr per tier-1 institution within 18 months, whilst achieving full regulatory compliance ahead of RBI enforcement deadlines. Neuro-inclusion is not a UX nicety — it is a material balance sheet lever.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px;">Fin<span class="grad">WithDip</span></div>
+      <div style="font-size:12px;color:var(--muted);">BFSI Strategy · Technology · Intelligence · 2026–27</div>
+    </div>
+    <div class="footer-note">All data is simulated for demonstration purposes only.</div>
+    <div class="footer-links">
+      <a href="index.html"     class="footer-link">Home</a>
+      <a href="dashboard.html" class="footer-link">Dashboard</a>
+      <a href="silver.html"    class="footer-link">Silver Economy</a>
+      <a href="esg.html"       class="footer-link">ESG Audit</a>
+      <a href="fraud.html"     class="footer-link">AI Fraud</a>
+      <a href="cases.html"     class="footer-link">Case Studies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+// ── CHECKLIST DATA ──
+const checks = [
+  {label:'Minimum 16px base font across all flows', pass:false},
+  {label:'OTP validity ≥120 seconds', pass:false},
+  {label:'Voice-guided navigation available', pass:false},
+  {label:'Single-step biometric login', pass:true},
+  {label:'Emergency contact on home screen', pass:false},
+  {label:'Session timeout >5 min with warning', pass:false},
+  {label:'Colour contrast ratio ≥4.5:1 (WCAG AA)', pass:false},
+  {label:'Tap target size ≥44×44px', pass:false},
+  {label:'Error messages with plain language guidance', pass:true},
+  {label:'Grievance redressal in ≤2 taps', pass:false},
+  {label:'Video KYC with large CTA buttons', pass:true},
+  {label:'Neuro-inclusive form design (one field at a time)', pass:false},
+];
+
+const cl = document.getElementById('checklist');
+checks.forEach(c => {
+  const col = c.pass ? 'var(--green)' : 'var(--red)';
+  cl.innerHTML += `
+    <div class="check-item">
+      <div class="check-box" style="background:${c.pass?'rgba(16,185,129,0.15)':'rgba(239,68,68,0.15)'};color:${col}">
+        ${c.pass?'✓':'✗'}
+      </div>
+      <span class="check-text" style="color:${c.pass?'rgba(240,240,248,0.85)':'rgba(240,240,248,0.5)'}">${c.label}</span>
+    </div>`;
+});
+
+// ── COG LOAD ──
+const cogSteps = ['Analyzing navigation tree...','Measuring authentication steps...','Evaluating information density...','Scoring cognitive friction...'];
+
+function runCogLoad() {
+  const btn = document.getElementById('cog-btn');
+  const ldr = document.getElementById('cog-loading');
+  const res = document.getElementById('cog-result');
+  btn.disabled = true;
+  btn.textContent = '⟳ Analyzing...';
+  res.classList.remove('visible');
+  ldr.style.display = 'block';
+  ldr.innerHTML = '';
+  cogSteps.forEach((s,i) => {
+    setTimeout(() => {
+      ldr.innerHTML += `<div class="loading-row" style="animation:fadeUp 0.4s ease forwards"><div class="loading-dot"></div><span class="loading-text">${s}</span></div>`;
+    }, i*380);
+  });
+  setTimeout(() => {
+    ldr.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = '▶ Run Cognitive Load Test';
+    res.classList.add('visible');
+    setTimeout(animateBars, 100);
+  }, cogSteps.length*380 + 400);
+}
+
+// ── ZEN MODE ──
+function toggleZen() {
+  const t = document.getElementById('zen-toggle');
+  const l = document.getElementById('zen-label');
+  const b = document.getElementById('zen-banner');
+  const on = t.classList.toggle('on');
+  document.body.classList.toggle('zen-mode', on);
+  l.textContent = on ? 'ACTIVE' : 'OFF';
+  l.style.color = on ? 'var(--purple-light)' : 'var(--muted)';
+  b.classList.toggle('visible', on);
+}
+function animateBars(){
+  document.querySelectorAll('.prog-fill').forEach(bar=>{
+    const val = bar.getAttribute('data-val');
+    bar.style.width = val + '%';
+  });
+}
+
+window.addEventListener('load',()=>{
+  animateBars();
+});
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+});
+
+document.querySelectorAll('.stat-card, .solution-card, .chart-card, .exec-box').forEach(el=>{
+  el.classList.add('fade-on-scroll');
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

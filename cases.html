@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Case Studies — FinWithDip</title>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <style>
+
+    .case-tab-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 22px;
+      border-radius:8px;
+      font-family:'Syne',sans-serif;
+      font-weight:600;
+      font-size:13px;
+      cursor:pointer;
+      border:none;
+      transition:all .3s ease;
+    }
+
+    .case-tab-btn.active{
+      background:linear-gradient(135deg,var(--purple),var(--cyan-dim));
+      color:white;
+    }
+
+    .case-tab-btn.inactive{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--muted);
+    }
+
+    .case-tab-btn.inactive:hover{
+      border-color:var(--purple);
+      color:var(--purple-light);
+    }
+
+    .case-tab-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .case-pane{
+      display:none;
+    }
+
+    .case-pane.active{
+      display:grid;
+      grid-template-columns:1fr 1.5fr;
+      gap:24px;
+    }
+
+    .info-col{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .info-block{
+      background:rgba(255,255,255,0.02);
+      border:1px solid var(--glass-border);
+      border-radius:10px;
+      padding:18px;
+      transition:all .3s ease;
+    }
+
+    .info-block:hover{
+      transform:translateY(-4px);
+      box-shadow:0 16px 40px rgba(124,58,237,.12);
+    }
+
+    .info-block-label{
+      font-family:'JetBrains Mono',monospace;
+      font-size:10px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+
+    .kw-tag{
+      display:inline-flex;
+      padding:4px 12px;
+      border-radius:999px;
+      font-size:10px;
+      font-family:'JetBrains Mono',monospace;
+      background:rgba(124,58,237,0.1);
+      color:var(--purple-light);
+      border:1px solid rgba(124,58,237,0.22);
+      margin:4px 4px 4px 0;
+    }
+
+    .resume-bullet{
+      display:flex;
+      gap:12px;
+      font-size:13px;
+      color:rgba(240,240,248,0.78);
+      line-height:1.65;
+      margin-bottom:10px;
+    }
+
+    .resume-bullet-arrow{
+      color:var(--purple-light);
+      flex-shrink:0;
+      margin-top:2px;
+    }
+
+    .threat-feed{
+      width:100%;
+      overflow:hidden;
+      border-top:1px solid rgba(255,255,255,0.06);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      background:rgba(255,255,255,0.02);
+      backdrop-filter:blur(10px);
+    }
+
+    .threat-track{
+      white-space:nowrap;
+      display:inline-block;
+      padding:12px 0;
+      font-size:11px;
+      font-family:'JetBrains Mono',monospace;
+      color:var(--muted);
+      animation:ticker 28s linear infinite;
+    }
+
+    @keyframes ticker{
+      0%{transform:translateX(100%);}
+      100%{transform:translateX(-100%);}
+    }
+
+    .impact-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:22px;
+    }
+
+    @media(max-width:768px){
+
+      .container{
+        padding-left:16px !important;
+        padding-right:16px !important;
+      }
+
+      .case-pane.active{
+        grid-template-columns:1fr !important;
+      }
+
+      .impact-grid{
+        grid-template-columns:1fr !important;
+      }
+
+      .fin-table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+      }
+
+      .page-title{
+        font-size:38px !important;
+        line-height:1.1;
+      }
+
+      .page-sub{
+        font-size:14px;
+      }
+
+    }
+    .btn-primary:hover{
+  transform:translateY(-2px);
+}
+
+  </style>
+</head>
+
+<body>
+
+<nav id="navbar">
+
+  <div class="nav-inner">
+
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">F</div>
+      <span class="nav-logo-text">
+        Fin<span class="grad">WithDip</span>
+      </span>
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Platform</a>
+      <a href="dashboard.html" class="nav-link">Dashboard</a>
+      <a href="silver.html" class="nav-link">Silver Economy</a>
+      <a href="esg.html" class="nav-link">ESG Audit</a>
+      <a href="fraud.html" class="nav-link">AI Fraud</a>
+      <a href="cases.html" class="nav-link" data-page="cases.html">Case Studies</a>
+    </div>
+
+    <a href="index.html#audit-section" class="nav-cta">
+      Run Audit ↗
+    </a>
+
+  </div>
+
+</nav>
+
+<section class="threat-feed">
+  <div class="threat-track">
+    CASE STUDY FEED • BFSI audit simulations active • RBI accessibility compliance tightening • ESG-linked bond markets accelerating • AI fraud defense becoming critical for Indian banks
+  </div>
+</section>
+
+<div class="page-hero">
+
+  <div class="container">
+
+    <span class="tag tag-info page-tag">
+      Case Studies
+    </span>
+
+    <h1 class="page-title">
+      Sample Audit <span class="grad">Reports</span>
+    </h1>
+
+    <p class="page-sub">
+      Mock audits demonstrating the FinWithDip methodology applied
+      to India's leading financial institutions. All data is simulated.
+    </p>
+
+  </div>
+
+</div>
+
+<div style="padding-bottom:80px;">
+
+  <div class="container">
+
+    <!-- TABS -->
+    <div style="display:flex;gap:12px;margin-bottom:36px;flex-wrap:wrap;">
+
+      <button
+        class="case-tab-btn active"
+        id="tab-hdfc"
+        onclick="switchCase('hdfc')"
+      >
+        🏦 HDFC Mobile App
+      </button>
+
+      <button
+        class="case-tab-btn inactive"
+        id="tab-sbi"
+        onclick="switchCase('sbi')"
+      >
+        🌱 SBI ESG Analysis
+      </button>
+
+    </div>
+
+  <!-- HDFC CASE -->
+<div class="case-pane active" id="pane-hdfc">
+
+  <div class="info-col">
+
+    <div class="info-block">
+      <div class="info-block-label">Audit Type</div>
+      <div style="font-size:14px;color:var(--purple-light);font-weight:500;">
+        Silver Economy Audit (Mock)
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-label">Problem Statement</div>
+
+      <p style="font-size:13px;color:rgba(240,240,248,0.72);line-height:1.7;">
+        HDFC's mobile banking app serves 7.2M senior customers (60+).
+        Internal data shows 58% of complaints originate from this segment.
+      </p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-label">Overall Risk Level</div>
+
+      <span class="tag tag-high" style="font-size:13px;padding:8px 20px;">
+        High Risk
+      </span>
+    </div>
+
+  </div>
+
+  <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;">
+
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:20px;text-transform:uppercase;">
+      Audit Findings — 6 Issues Identified
+    </div>
+
+    <table class="fin-table">
+
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Finding</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>01</td>
+          <td>6-layer deep navigation to fund transfer</td>
+          <td><span class="tag tag-high">High</span></td>
+        </tr>
+
+        <tr>
+          <td>02</td>
+          <td>OTP validity window too short</td>
+          <td><span class="tag tag-high">High</span></td>
+        </tr>
+
+        <tr>
+          <td>03</td>
+          <td>Font size below WCAG standard</td>
+          <td><span class="tag tag-high">High</span></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <div style="margin-top:22px;background:rgba(124,58,237,0.06);border:1px solid rgba(124,58,237,0.2);border-radius:10px;padding:16px;">
+
+      <div style="font-size:10px;color:var(--purple-light);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:8px;">
+        Remediation ROI
+      </div>
+
+      <p style="font-size:13px;color:rgba(240,240,248,0.8);line-height:1.7;">
+        Accessibility remediation projected to reduce complaints by 48%
+        and protect ₹240Cr in senior CASA retention.
+      </p>
+
+    </div>
+
+    <!-- IMPACT GRID -->
+    <div class="impact-grid">
+
+      <div class="info-block" style="text-align:center;">
+        <div style="font-size:26px;font-family:'Syne',sans-serif;font-weight:700;color:var(--green);">
+          48%
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);">
+          Complaint Reduction
+        </div>
+      </div>
+
+      <div class="info-block" style="text-align:center;">
+        <div style="font-size:26px;font-family:'Syne',sans-serif;font-weight:700;color:var(--gold);">
+          ₹240Cr
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);">
+          CASA Protected
+        </div>
+      </div>
+
+      <div class="info-block" style="text-align:center;">
+        <div style="font-size:26px;font-family:'Syne',sans-serif;font-weight:700;color:var(--purple-light);">
+          WCAG 2.2
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);">
+          Compliance Ready
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-primary" style="margin-top:20px;width:100%;">
+      ↓ Download Audit Report
+    </button>
+
+  </div>
+
+</div>
+
+<!-- SBI ESG CASE -->
+<div class="case-pane" id="pane-sbi">
+
+  <div class="info-col">
+
+    <div class="info-block">
+      <div class="info-block-label">Audit Type</div>
+
+      <div style="font-size:14px;color:var(--green);font-weight:500;">
+        ESG Analysis (Mock)
+      </div>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-label">Problem Statement</div>
+
+      <p style="font-size:13px;color:rgba(240,240,248,0.72);line-height:1.7;">
+        SBI's BRSR Core submission reveals inconsistencies between
+        stated green finance targets and portfolio composition.
+      </p>
+    </div>
+
+    <div class="info-block">
+      <div class="info-block-label">Overall Risk Level</div>
+
+      <span class="tag tag-med" style="font-size:13px;padding:8px 20px;">
+        Medium Risk
+      </span>
+    </div>
+
+  </div>
+
+  <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;">
+
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:20px;text-transform:uppercase;">
+      ESG Findings — 6 Issues Identified
+    </div>
+
+    <table class="fin-table">
+
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Finding</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>01</td>
+          <td>Green bond proceeds allocated to non-green assets</td>
+          <td><span class="tag tag-high">High</span></td>
+        </tr>
+
+        <tr>
+          <td>02</td>
+          <td>Scope 3 investment emissions not disclosed</td>
+          <td><span class="tag tag-high">High</span></td>
+        </tr>
+
+        <tr>
+          <td>03</td>
+          <td>Transition finance framework absent</td>
+          <td><span class="tag tag-med">Medium</span></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <div style="margin-top:22px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:10px;padding:16px;">
+
+      <div style="font-size:10px;color:var(--green);font-family:'JetBrains Mono',monospace;text-transform:uppercase;margin-bottom:8px;">
+        ESG Upgrade Pathway
+      </div>
+
+      <p style="font-size:13px;color:rgba(240,240,248,0.8);line-height:1.7;">
+        A structured ESG remediation roadmap can improve SBI's
+        ESG rating from BBB to A within 18 months.
+      </p>
+
+    </div>
+
+    <!-- ESG IMPACT GRID -->
+    <div class="impact-grid">
+
+      <div class="info-block" style="text-align:center;">
+        <div style="font-size:26px;font-family:'Syne',sans-serif;font-weight:700;color:var(--red);">
+          38%
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);">
+          ESG Disclosure Gap
+        </div>
+      </div>
+
+      <div class="info-block" style="text-align:center;">
+        <div style="font-size:26px;font-family:'Syne',sans-serif;font-weight:700;color:var(--green);">
+          ₹8KCr
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);">
+          Bond Access Potential
+        </div>
+      </div>
+
+      <div class="info-block" style="text-align:center;">
+        <div style="font-size:26px;font-family:'Syne',sans-serif;font-weight:700;color:var(--gold);">
+          BBB → A
+        </div>
+
+        <div style="font-size:11px;color:var(--muted);">
+          ESG Upgrade Path
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn-primary" style="margin-top:20px;width:100%;">
+      ↓ Download ESG Report
+    </button>
+
+  </div>
+
+</div>
+
+    <!-- RESUME SECTION -->
+    <div style="margin-top:60px;background:rgba(124,58,237,0.05);border:1px solid rgba(124,58,237,0.18);border-radius:16px;padding:44px;">
+
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:30px;flex-wrap:wrap;">
+        <span class="tag tag-info">Professional Resume Entry</span>
+
+        <span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace;">
+          Impact-Oriented Format · BFSI Keywords
+        </span>
+      </div>
+
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;margin-bottom:4px;">
+        FinWithDip
+      </div>
+
+      <div style="font-size:14px;color:var(--purple-light);margin-bottom:4px;font-weight:500;">
+        Independent BFSI Strategy & Technology Initiative
+      </div>
+
+      <div style="font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:24px;">
+        2024 – Present · Strategic Upskilling During Career Transition
+      </div>
+
+      <div style="margin-bottom:28px;">
+
+        <div class="resume-bullet">
+          <span class="resume-bullet-arrow">▸</span>
+          <span>
+            Developed AI TRiSM-aligned fraud detection framework
+            for deepfake KYC and transaction anomaly detection.
+          </span>
+        </div>
+
+        <div class="resume-bullet">
+          <span class="resume-bullet-arrow">▸</span>
+          <span>
+            Built ESG audit simulations aligned with BRSR Core
+            and IFRS S2 frameworks.
+          </span>
+        </div>
+
+      </div>
+
+      <div style="border-top:1px solid var(--border);padding-top:22px;">
+
+        <div style="font-size:11px;color:var(--muted);margin-bottom:12px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;">
+          Keywords & Competencies
+        </div>
+
+        <div>
+          <span class="kw-tag">AI TRiSM</span>
+          <span class="kw-tag">ESG</span>
+          <span class="kw-tag">BRSR Core</span>
+          <span class="kw-tag">WCAG 2.2</span>
+          <span class="kw-tag">Digital Banking</span>
+          <span class="kw-tag">Fraud Detection</span>
+          <span class="kw-tag">Strategy Consulting</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+
+  <div class="footer-inner">
+
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px;">
+        Fin<span class="grad">WithDip</span>
+      </div>
+
+      <div style="font-size:12px;color:var(--muted);">
+        BFSI Strategy · Technology · Intelligence · 2026–27
+      </div>
+    </div>
+
+    <div class="footer-note">
+      All data is simulated for demonstration purposes only.
+    </div>
+
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="dashboard.html" class="footer-link">Dashboard</a>
+      <a href="silver.html" class="footer-link">Silver Economy</a>
+      <a href="esg.html" class="footer-link">ESG Audit</a>
+      <a href="fraud.html" class="footer-link">AI Fraud</a>
+      <a href="cases.html" class="footer-link">Case Studies</a>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="shared.js"></script>
+
+<script>
+
+function switchCase(id){
+
+  document.querySelectorAll('.case-pane')
+    .forEach(p => p.classList.remove('active'));
+
+  document.querySelectorAll('.case-tab-btn')
+    .forEach(b => {
+      b.classList.remove('active');
+      b.classList.add('inactive');
+    });
+
+  document.getElementById('pane-' + id)
+    .classList.add('active');
+
+  const tb = document.getElementById('tab-' + id);
+
+  tb.classList.add('active');
+  tb.classList.remove('inactive');
+
+  setTimeout(animateBars,100);
+
+}
+
+</script>
+
+</body>
+</html>

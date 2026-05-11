@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinWithDip — BFSI Strategy & Technology Platform</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 80px;
+    }
+    .grid-bg-hero {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.06) 1px, transparent 1px);
+      background-size: 44px 44px;
+      opacity: 0.7;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(124,58,237,0.1);
+      border: 1px solid rgba(124,58,237,0.28);
+      border-radius: 999px; padding: 6px 16px;
+      margin-bottom: 32px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+    }
+    .hero-badge span { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--purple-light); text-transform: uppercase; letter-spacing: 0.1em; }
+    .hero-title { font-size: clamp(2.8rem, 6vw, 5.2rem); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .hero-sub { font-size: 17px; color: rgba(240,240,248,0.58); line-height: 1.75; max-width: 580px; margin-bottom: 40px; }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+    .hero-stats { display: flex; gap: 44px; flex-wrap: wrap; }
+    .hero-stat-val { font-size: 22px; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--purple-light); }
+    .hero-stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+    /* floating card */
+    .hero-float-card {
+      position: absolute; right: 8%; top: 50%; transform: translateY(-50%);
+      width: 280px;
+      background: rgba(13,13,26,0.85);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+      backdrop-filter: blur(30px);
+      animation: float 5s ease-in-out infinite;
+    }
+    @media(max-width:1100px){ .hero-float-card{display:none;} }
+
+    /* ── MODULES ── */
+    .module-card {
+      border-radius: 16px; padding: 32px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      display: block; text-decoration: none; color: var(--text);
+      position: relative; overflow: hidden;
+    }
+    .module-card:hover { transform: translateY(-7px); box-shadow: 0 22px 64px rgba(124,58,237,0.22); }
+    .module-card-orb {
+      position: absolute; top: -30px; right: -30px;
+      width: 130px; height: 130px; border-radius: 50%; opacity: 0.07; filter: blur(20px);
+    }
+    .module-stat-val { font-size: 28px; font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 14px; }
+    .module-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .module-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+    .module-arrow { font-size: 12px; font-weight: 600; }
+
+    /* ── CAPABILITIES ── */
+    .cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .cap-card { background: rgba(255,255,255,0.025); border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; transition: border-color 0.2s; }
+    .cap-card:hover { border-color: rgba(124,58,237,0.4); }
+    .cap-icon { font-size: 26px; margin-bottom: 10px; }
+    .cap-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px; margin-bottom: 6px; }
+    .cap-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+    /* ── AUDIT TOOL ── */
+    .audit-tool { border-radius: 16px; padding: 32px; border: 1px solid var(--border); background: var(--glass); }
+    .audit-status-row { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+    .audit-status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    .audit-status-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cyan); text-transform: uppercase; letter-spacing: 0.1em; }
+    .audit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 22px; }
+    #audit-result { margin-top: 28px; display: none; }
+    #audit-result.visible { display: block; animation: fadeUp 0.5s ease; }
+    .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .result-label-small { font-size: 10px; color: var(--muted); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; margin-bottom: 4px; }
+    .result-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; }
+    .bars-wrap { display: flex; flex-direction: column; gap: 14px; margin-bottom: 22px; }
+    .loading-steps { margin-top: 22px; }
+    #loading-steps { display: none; }
+    #loading-steps.visible { display: block; }
+
+    /* frame lines */
+    .frame-corner {
+      position: absolute; width: 20px; height: 20px;
+      border-color: rgba(124,58,237,0.5); border-style: solid;
+    }
+    .fc-tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .fc-tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .fc-bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+    .fc-br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+    @media(max-width:768px){
+
+  .container{
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+  .hero{
+    min-height:auto;
+    padding-top:120px;
+    padding-bottom:80px;
+  }
+
+  .hero-stats{
+    gap:22px;
+  }
+
+  .audit-grid,
+  .grid-2,
+  .grid-3,
+  .cap-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero-title{
+    font-size:clamp(2.4rem,10vw,4rem);
+  }
+
+  .hero-sub{
+    font-size:15px;
+  }
+
+}
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">F</div>
+      <span class="nav-logo-text">Fin<span class="grad">WithDip</span></span>
+    </a>
+<div class="nav-links">
+  <a href="index.html"      class="nav-link" data-page="index.html">Platform</a>
+  <a href="dashboard.html"  class="nav-link" data-page="dashboard.html">Dashboard</a>
+  <a href="silver.html"     class="nav-link" data-page="silver.html">Silver Economy</a>
+  <a href="esg.html"        class="nav-link" data-page="esg.html">ESG Audit</a>
+  <a href="fraud.html"      class="nav-link" data-page="fraud.html">AI Fraud</a>
+  <a href="cases.html"      class="nav-link" data-page="cases.html">Case Studies</a>
+</div>
+</nav>
+<!-- LIVE INTELLIGENCE FEED -->
+<section class="threat-feed">
+  <div class="threat-track">
+    LIVE BFSI INTELLIGENCE • RBI AI governance scrutiny increasing • SEBI BRSR Core adoption accelerating • Deepfake banking attacks up 340% YoY • Senior banking accessibility under review • AI TRiSM becoming mandatory across BFSI • ESG-linked financing expanding rapidly
+  </div>
+</section>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+  <div class="grid-bg-hero"></div>
+  <div class="orb" style="width:620px;height:620px;background:radial-gradient(circle,rgba(124,58,237,0.14),transparent 70%);top:5%;left:-12%;"></div>
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(34,211,238,0.09),transparent 70%);bottom:0%;right:-6%;"></div>
+
+  <div class="container" style="position:relative;z-index:1;">
+    <div style="max-width:760px;">
+      <div class="hero-badge">
+        <div class="hero-badge-dot pulse-dot"></div>
+        <span>BFSI Strategy · Fintech Intelligence · 2026–27</span>
+      </div>
+
+      <h1 class="hero-title">
+        Future-Proof<br/><span class="grad">Banking Intelligence</span><br/>for Modern India
+      </h1>
+
+      <p class="hero-sub">A next-generation BFSI audit and strategy platform covering Silver Economy accessibility, ESG compliance, and AI fraud defense — built for India's ₹200Tr financial ecosystem.</p>
+
+      <div class="hero-ctas">
+        <a href="#audit-section" class="btn-primary">Run a Demo Audit ↓</a>
+        <a href="dashboard.html" class="btn-ghost">View Dashboard →</a>
+      </div>
+
+      <div class="hero-stats">
+        <div><div class="hero-stat-val">3</div><div class="hero-stat-label">Core Audit Modules</div></div>
+        <div><div class="hero-stat-val">₹200Tr</div><div class="hero-stat-label">Market Scope</div></div>
+        <div><div class="hero-stat-val">SEBI BRSR</div><div class="hero-stat-label">Framework Compliant</div></div>
+        <div><div class="hero-stat-val">AI TRiSM</div><div class="hero-stat-label">Threat Model</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- floating live card -->
+  <div class="hero-float-card" style="position:absolute;right:6%;top:50%;transform:translateY(-50%);">
+    <div class="frame-corner fc-tl"></div>
+    <div class="frame-corner fc-tr"></div>
+    <div class="frame-corner fc-bl"></div>
+    <div class="frame-corner fc-br"></div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--cyan);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:16px;">Live Risk Snapshot</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <div class="prog-label"><span style="color:var(--muted);font-size:12px;">Accessibility Index</span><span style="color:var(--cyan);">41%</span></div>
+        <div class="prog-track"><div class="prog-fill" data-val="41" style="background:var(--cyan);"></div></div>
+      </div>
+      <div>
+        <div class="prog-label"><span style="color:var(--muted);font-size:12px;">ESG Compliance</span><span style="color:var(--green);">64%</span></div>
+        <div class="prog-track"><div class="prog-fill" data-val="64" style="background:var(--green);"></div></div>
+      </div>
+      <div>
+        <div class="prog-label"><span style="color:var(--muted);font-size:12px;">Fraud Exposure</span><span style="color:var(--red);">72%</span></div>
+        <div class="prog-track"><div class="prog-fill" data-val="72" style="background:var(--red);"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);">Updated: Q2 FY2026–27 · Mock Data</div>
+  </div>
+</section>
+
+<!-- ════════════════════ MODULES ════════════════════ -->
+<section class="section-alt">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:60px;" class="fade-on-scroll">
+      <span class="tag tag-info" style="margin-bottom:14px;">Platform Modules</span>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;margin-bottom:14px;">Three Pillars of <span class="grad">BFSI Excellence</span></h2>
+      <p style="color:var(--muted);max-width:500px;margin:0 auto;font-size:15px;">Integrated audit frameworks addressing India's most critical banking risk vectors for 2026–27.</p>
+    </div>
+
+    <div class="grid-3">
+      <!-- Silver Economy -->
+      <a href="silver.html" class="module-card fade-on-scroll">
+        <div class="module-card-orb" style="background:#a78bfa;"></div>
+        <div style="font-size:40px;margin-bottom:18px;">🧓</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a78bfa;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Senior deposit pool at risk</div>
+        <div class="module-stat-val" style="color:#a78bfa;">₹4.8Tr</div>
+        <div class="module-title">Silver Economy Audit</div>
+        <div class="module-desc">UX Cognitive Load Analysis + Elder Risk Scoring + Voice-Biometric Consent Frameworks</div>
+        <span class="module-arrow" style="color:#a78bfa;">Explore Module →</span>
+      </a>
+
+      <!-- ESG -->
+      <a href="esg.html" class="module-card fade-on-scroll">
+        <div class="module-card-orb" style="background:#10b981;"></div>
+        <div style="font-size:40px;margin-bottom:18px;">🌱</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#10b981;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Banks with BRSR gaps</div>
+        <div class="module-stat-val" style="color:#10b981;">82%</div>
+        <div class="module-title">ESG Audit Engine</div>
+        <div class="module-desc">BRSR Core Framework + Greenwashing Detection + ESG Scorecard Generation</div>
+        <span class="module-arrow" style="color:#10b981;">Explore Module →</span>
+      </a>
+
+      <!-- Fraud -->
+      <a href="fraud.html" class="module-card fade-on-scroll">
+        <div class="module-card-orb" style="background:#22d3ee;"></div>
+        <div style="font-size:40px;margin-bottom:18px;">🛡️</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#22d3ee;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Deepfake fraud growth YoY</div>
+        <div class="module-stat-val" style="color:#22d3ee;">340%</div>
+        <div class="module-title">AI Fraud Defense</div>
+        <div class="module-desc">Deepfake KYC + Agentic Threat Modeling + Transaction Anomaly Monitor</div>
+        <span class="module-arrow" style="color:#22d3ee;">Explore Module →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ CAPABILITIES ════════════════════ -->
+<section class="section">
+  <div class="container">
+    <div class="grid-2" style="gap:80px;align-items:center;">
+      <div class="fade-on-scroll">
+        <span class="tag tag-info" style="margin-bottom:16px;">Key Capabilities</span>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:18px;">Strategy Meets<br/><span class="grad">Technology</span></h2>
+        <p style="color:var(--muted);line-height:1.85;margin-bottom:30px;">FinWithDip bridges the gap between BFSI regulatory expertise and modern AI-powered audit tooling. Every framework is grounded in RBI/SEBI guidelines and translates into board-ready risk reports.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0;"></div><span style="color:rgba(240,240,248,0.7);">SEBI BRSR Core · RBI Digital Banking Guidelines</span></div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0;"></div><span style="color:rgba(240,240,248,0.7);">WCAG 2.2 AA · IRDAI Health Insurance Circulars</span></div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0;"></div><span style="color:rgba(240,240,248,0.7);">AI TRiSM · NIST AI RMF · ISO 42001</span></div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:13px;"><div style="width:4px;height:4px;border-radius:50%;background:var(--cyan);flex-shrink:0;"></div><span style="color:rgba(240,240,248,0.7);">Basel IV · IndAS 109 · IFRS S2</span></div>
+        </div>
+      </div>
+
+      <div class="cap-grid fade-on-scroll">
+        <div class="cap-card"><div class="cap-icon">🧠</div><div class="cap-title">Neuro-Inclusive UX</div><div class="cap-desc">Cognitive load analysis and WCAG 2.2 compliance for the Silver Economy segment.</div></div>
+        <div class="cap-card"><div class="cap-icon">🌱</div><div class="cap-title">ESG Risk Scoring</div><div class="cap-desc">SEBI BRSR Core evaluation with greenwashing detection and Scope 3 gap analysis.</div></div>
+        <div class="cap-card"><div class="cap-icon">🤖</div><div class="cap-title">AI TRiSM Defense</div><div class="cap-desc">Deepfake KYC vulnerability scoring and agentic fraud threat modeling.</div></div>
+        <div class="cap-card"><div class="cap-icon">📊</div><div class="cap-title">Regulatory Intelligence</div><div class="cap-desc">Real-time RBI, SEBI and IRDAI compliance mapping with gap reporting.</div></div>
+        <div class="cap-card"><div class="cap-icon">💼</div><div class="cap-title">Strategy Consulting</div><div class="cap-desc">McKinsey-grade audit frameworks translated into actionable remediation roadmaps.</div></div>
+        <div class="cap-card"><div class="cap-icon">📈</div><div class="cap-title">CASA Impact Modeling</div><div class="cap-desc">Quantified revenue impact of accessibility and digital experience gaps.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ AUDIT TOOL ════════════════════ -->
+<section class="section-alt" id="audit-section">
+  <div class="container">
+    <div class="grid-2" style="gap:60px;align-items:flex-start;">
+      <!-- LEFT -->
+      <div class="fade-on-scroll">
+        <span class="tag tag-info" style="margin-bottom:16px;">Interactive Demo</span>
+        <h2 style="font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;margin-bottom:18px;">Run a Live<br/><span class="grad">Risk Audit</span></h2>
+        <p style="color:var(--muted);line-height:1.85;margin-bottom:28px;">Select your institution type and audit category. Our simulation engine cross-references 47 risk parameters across SEBI, RBI and international AI safety frameworks.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid var(--glass-border);font-size:13px;"><span style="color:var(--green);">✓</span><span style="color:rgba(240,240,248,0.7);">47 risk parameters analyzed</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid var(--glass-border);font-size:13px;"><span style="color:var(--green);">✓</span><span style="color:rgba(240,240,248,0.7);">SEBI BRSR + RBI circular cross-reference</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid var(--glass-border);font-size:13px;"><span style="color:var(--green);">✓</span><span style="color:rgba(240,240,248,0.7);">AI TRiSM threat scoring</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 16px;background:rgba(255,255,255,0.02);border-radius:8px;border:1px solid var(--glass-border);font-size:13px;"><span style="color:var(--green);">✓</span><span style="color:rgba(240,240,248,0.7);">Board-ready remediation roadmap</span></div>
+        </div>
+      </div>
+
+      <!-- RIGHT — AUDIT TOOL -->
+      <div class="audit-tool fade-on-scroll" style="position:relative;">
+        <div style="position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;border-radius:16px;background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(34,211,238,0.1),transparent);z-index:-1;filter:blur(1px);"></div>
+
+        <div class="audit-status-row">
+          <div class="audit-status-dot pulse-dot"></div>
+          <span class="audit-status-text">Audit Engine v2.4 — Ready</span>
+        </div>
+
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:6px;">Run a Demo Audit</h3>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:26px;">Select parameters to generate a simulated risk assessment.</p>
+
+        <div class="audit-grid">
+          <div>
+            <label class="input-label">Audit Type</label>
+            <select class="fin-select" id="audit-type">
+              <option>Silver Economy</option>
+              <option>ESG</option>
+              <option>AI Fraud Defense</option>
+            </select>
+          </div>
+          <div>
+            <label class="input-label">Institution Type</label>
+            <select class="fin-select" id="bank-type">
+              <option>Retail Bank</option>
+              <option>Fintech App</option>
+              <option>NBFC</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="runAudit()" id="audit-btn" style="width:100%;">▶ Execute Audit</button>
+
+        <!-- loading -->
+        <div id="loading-steps" class="loading-steps"></div>
+
+        <!-- result -->
+        <div id="audit-result">
+          <div class="result-header">
+            <div>
+              <div class="result-label-small">Audit Result</div>
+              <div class="result-title" id="result-label"></div>
+            </div>
+            <span id="result-risk-tag" class="tag"></span>
+          </div>
+          <div class="bars-wrap" id="bars-wrap"></div>
+          <div class="ai-box">
+            <div class="ai-box-label">AI Analysis</div>
+            <p style="font-size:13px;line-height:1.75;color:rgba(240,240,248,0.8);" id="ai-insight"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px;">Fin<span class="grad">WithDip</span></div>
+      <div style="font-size:12px;color:var(--muted);">BFSI Strategy · Technology · Intelligence · 2026–27</div>
+    </div>
+    <div class="footer-note">All data is simulated for demonstration purposes only.</div>
+    <div class="footer-links">
+      <a href="index.html"     class="footer-link">Home</a>
+      <a href="dashboard.html" class="footer-link">Dashboard</a>
+      <a href="silver.html"    class="footer-link">Silver Economy</a>
+      <a href="esg.html"       class="footer-link">ESG Audit</a>
+      <a href="fraud.html"     class="footer-link">AI Fraud</a>
+      <a href="cases.html"     class="footer-link">Case Studies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+const AUDIT_DATA = {
+  "Silver Economy": {
+    "Retail Bank":  {access:38,esg:55,fraud:62,level:"High",  label:"Critical Accessibility Gaps"},
+    "Fintech App":  {access:22,esg:48,fraud:70,level:"High",  label:"Elder-Unfriendly Interface"},
+    "NBFC":         {access:50,esg:60,fraud:48,level:"Medium",label:"Moderate Cognitive Load Issues"},
+  },
+  "ESG": {
+    "Retail Bank":  {access:72,esg:58,fraud:35,level:"Medium",label:"Partial BRSR Compliance"},
+    "Fintech App":  {access:65,esg:42,fraud:28,level:"High",  label:"Greenwashing Risk Detected"},
+    "NBFC":         {access:68,esg:71,fraud:40,level:"Low",   label:"Strong ESG Posture"},
+  },
+  "AI Fraud Defense": {
+    "Retail Bank":  {access:80,esg:66,fraud:72,level:"High",  label:"Deepfake KYC Vulnerability"},
+    "Fintech App":  {access:75,esg:58,fraud:85,level:"High",  label:"Agentic Attack Surface"},
+    "NBFC":         {access:70,esg:60,fraud:55,level:"Medium",label:"Moderate AI Exposure"},
+  },
+};
+const INSIGHTS = {
+  "Silver Economy": "Your institution exhibits significant gaps in neuro-inclusive design for the 60+ demographic. Cognitive load analysis reveals 3-step authentication flows causing 34% drop-off in senior users. Immediate remediation via WCAG 2.2 AA compliance and voice-biometric consent flows is recommended. CASA ratio impact estimated at ₹180Cr annual deposit leakage.",
+  "ESG": "BRSR Core framework assessment identifies material gaps in Scope 3 emissions disclosure and green finance portfolio tagging. Greenwashing risk score is elevated due to unsubstantiated sustainability claims. SEBI compliance deadline proximity increases regulatory penalty exposure. ESG-linked bond issuance readiness: 42%.",
+  "AI Fraud Defense": "Agentic AI threat vectors identified across Video-KYC pipeline. Deepfake injection rate in industry has risen 340% YoY. Your current liveness detection model exhibits 18% false-negative rate against GAN-generated faces. AI TRiSM framework adoption is critical. Recommended: multi-modal biometric fusion + behavioral anomaly detection layer.",
+};
+const STEPS = ["Analyzing UX architecture...","Cross-referencing SEBI BRSR framework...","Running AI threat model...","Generating risk score..."];
+
+function runAudit() {
+  const type = document.getElementById('audit-type').value;
+  const bank = document.getElementById('bank-type').value;
+  const btn  = document.getElementById('audit-btn');
+  const res  = document.getElementById('audit-result');
+  const ldr  = document.getElementById('loading-steps');
+
+  btn.disabled = true;
+  btn.innerHTML = '⟳ Scanning...';
+  res.classList.remove('visible');
+  ldr.innerHTML = '';
+  ldr.classList.add('visible');
+
+  STEPS.forEach((s, i) => {
+    setTimeout(() => {
+      const row = document.createElement('div');
+      row.className = 'loading-row';
+      row.style.animationDelay = '0s';
+      row.innerHTML = `<div class="loading-dot"></div><span class="loading-text">${s}</span>`;
+      ldr.appendChild(row);
+    }, i * 420);
+  });
+
+  setTimeout(() => {
+    ldr.classList.remove('visible');
+    ldr.innerHTML = '';
+    btn.disabled = false;
+    btn.innerHTML = '▶ Execute Audit';
+
+    const d = AUDIT_DATA[type][bank];
+    document.getElementById('result-label').textContent = d.label;
+    const rt = document.getElementById('result-risk-tag');
+    rt.className = `tag tag-${d.level==='Low'?'low':d.level==='Medium'?'med':'high'}`;
+    rt.textContent = d.level + ' Risk';
+
+    const bw = document.getElementById('bars-wrap');
+    bw.innerHTML = `
+      <div>
+        <div class="prog-label"><span>Accessibility Score</span><span style="color:var(--cyan)">${d.access}%</span></div>
+        <div class="prog-track"><div class="prog-fill" data-val="${d.access}" style="background:var(--cyan)"></div></div>
+      </div>
+      <div>
+        <div class="prog-label"><span>ESG Compliance Index</span><span style="color:var(--green)">${d.esg}%</span></div>
+        <div class="prog-track"><div class="prog-fill" data-val="${d.esg}" style="background:var(--green)"></div></div>
+      </div>
+      <div>
+        <div class="prog-label"><span>Fraud Vulnerability</span><span style="color:var(--red)">${d.fraud}%</span></div>
+        <div class="prog-track"><div class="prog-fill" data-val="${d.fraud}" style="background:var(--red)"></div></div>
+      </div>`;
+
+    document.getElementById('ai-insight').textContent = INSIGHTS[type];
+    res.classList.add('visible');
+    setTimeout(animateBars, 50);
+  }, STEPS.length * 420 + 300);
+}
+/* ACTIVE NAV LINK */
+
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+
+document.querySelectorAll(".nav-link").forEach(link => {
+
+  if(link.dataset.page === currentPage){
+
+    link.classList.add("active");
+
+  }
+
+});
+</script>
+<!-- AI ASSISTANT -->
+<div class="ai-chat">
+  💬
+</div>
+</body>
+</html>

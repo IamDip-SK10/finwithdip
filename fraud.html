@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Fraud Defense — FinWithDip</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .vuln-card { margin-bottom:14px; padding:16px; background:rgba(255,255,255,0.02); border-radius:10px; border:1px solid var(--glass-border); transition:border-color 0.2s; }
+    .vuln-card:hover { border-color:rgba(239,68,68,0.3); }
+    .vuln-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+    .vuln-name { font-family:'Syne',sans-serif; font-weight:600; font-size:13px; }
+    .vuln-coverage { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--cyan); margin-bottom:6px; }
+    .vuln-desc { font-size:12px; color:var(--muted); line-height:1.55; }
+    #tx-result { display:none; }
+    #tx-result.visible { display:block; animation:fadeUp 0.5s ease; }
+    .flag-row { display:flex; gap:8px; font-size:12px; color:rgba(240,240,248,0.72); margin-bottom:5px; line-height:1.5; }
+    .threat-item { padding:16px; background:rgba(255,255,255,0.02); border-radius:10px; border:1px solid var(--glass-border); margin-bottom:12px; }
+    .threat-title { font-family:'Syne',sans-serif; font-weight:600; font-size:13px; margin-bottom:4px; }
+    .threat-bar-wrap { margin-top:10px; }
+    .btn-primary{
+  transition:all .3s ease;
+}
+
+.btn-primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px rgba(34,211,238,.28);
+}
+.stat-card{
+  animation:fadeUp .6s ease;
+}
+    .vuln-card,
+.stat-card,
+.threat-item{
+  transition:all .3s ease;
+}
+
+.vuln-card:hover,
+.stat-card:hover,
+.threat-item:hover{
+  transform:translateY(-5px);
+  box-shadow:0 18px 50px rgba(239,68,68,.12);
+  border-color:rgba(239,68,68,.25);
+}
+    
+    
+   @media(max-width:768px){
+
+  .container{
+    padding-left:16px;
+    padding-right:16px;
+  }
+
+  .grid-4,
+  .grid-2{
+    grid-template-columns:1fr;
+  }
+
+  .stat-value{
+    font-size:42px;
+  }
+
+}
+    
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">F</div>
+      <span class="nav-logo-text">Fin<span class="grad">WithDip</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html"      class="nav-link" data-page="index.html">Platform</a>
+      <a href="dashboard.html"  class="nav-link" data-page="dashboard.html">Dashboard</a>
+      <a href="silver.html"     class="nav-link" data-page="silver.html">Silver Economy</a>
+      <a href="esg.html"        class="nav-link" data-page="esg.html">ESG Audit</a>
+      <a href="fraud.html" class="nav-link" data-page="fraud.html">AI Fraud</a>
+      <a href="cases.html"      class="nav-link" data-page="cases.html">Case Studies</a>
+    </div>
+    <a href="index.html#audit-section" class="nav-cta">Run Audit ↗</a>
+  </div>
+</nav>
+<section class="threat-feed">
+  <div class="threat-track">
+    FRAUD ALERT • Deepfake KYC attacks rising 340% YoY • RBI AI fraud compliance tightening • Synthetic voice fraud increasing • Behavioral AI becoming mandatory • UPI mule-account detection accelerating • AI TRiSM adoption expanding across BFSI
+  </div>
+</section>
+
+<div class="page-hero">
+  <div class="container">
+    <span class="tag tag-cyan page-tag">Module 03</span>
+    <h1 class="page-title">🛡️ Agentic AI Fraud <span class="grad">Defense</span></h1>
+    <p class="page-sub">Deepfake KYC vulnerability assessment, Video-KYC attack vector analysis, and real-time transaction anomaly detection powered by behavioral AI.</p>
+  </div>
+</div>
+
+<div style="padding-bottom:80px;">
+  <div class="container">
+
+    <!-- STATS -->
+    <div class="grid-4" style="margin-bottom:36px;">
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--red)"></div>
+        <div class="stat-label">Deepfake Growth YoY</div>
+        <div class="stat-value" style="color:var(--red)">340<span style="font-size:18px;opacity:.6">%</span></div></div>
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--gold)"></div>
+        <div class="stat-label">KYC False Negative Rate</div>
+        <div class="stat-value" style="color:var(--gold)">18<span style="font-size:18px;opacity:.6">%</span></div></div>
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--red)"></div>
+        <div class="stat-label">UPI Fraud FY26</div>
+        <div class="stat-value" style="color:var(--red)">₹8.7<span style="font-size:18px;opacity:.6">KCr</span></div></div>
+      <div class="stat-card"><div class="stat-card-orb" style="background:var(--green)"></div>
+        <div class="stat-label">FinWithDip Detection Rate</div>
+        <div class="stat-value" style="color:var(--green)">94<span style="font-size:18px;opacity:.6">%</span></div></div>
+    </div>
+
+    <!-- VULNERABILITIES + TRANSACTION MONITOR -->
+    <div class="grid-2" style="margin-bottom:28px;">
+
+      <!-- VIDEO KYC VULNERABILITIES -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;">
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px;">Video-KYC Vulnerability Map</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:22px;">Attack vector analysis across the KYC pipeline — aligned with RBI Master Direction on KYC (2023).</p>
+        <div id="vuln-list"></div>
+      </div>
+
+      <!-- TRANSACTION MONITOR -->
+      <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:28px;">
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:6px;">Transaction Anomaly Monitor</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:22px;">Simulate a transaction to test behavioral AI fraud detection.</p>
+
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:18px;">
+          <div>
+            <label class="input-label">Transaction Amount (₹)</label>
+            <input class="fin-input" type="number" id="tx-amount" placeholder="e.g. 75000"/>
+          </div>
+          <div>
+            <label class="input-label">Transaction Pattern</label>
+            <select class="fin-select" id="tx-pattern">
+              <option>Normal</option>
+              <option>Round Amount</option>
+              <option>Rapid Succession</option>
+              <option>New Beneficiary Large</option>
+              <option>Off-hours Transfer</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="analyzeTx()" id="tx-btn" style="width:100%;margin-bottom:16px;">▶ Analyze Transaction</button>
+        <div id="tx-loading" style="display:none;"></div>
+
+        <div id="tx-result">
+          <div id="verdict-box">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+              <span id="verdict-label" style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;"></span>
+              <span id="verdict-confidence" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);"></span>
+            </div>
+            <div id="verdict-action" style="font-size:11px;color:var(--muted);margin-bottom:12px;font-family:'JetBrains Mono',monospace;"></div>
+            <div id="verdict-flags"></div>
+          </div>
+          <button
+  class="btn-primary"
+  onclick="downloadFraudReport()"
+  style="width:100%;margin-top:18px;"
+>
+  ↓ Download Fraud Analysis Report
+</button>
+        </div>
+
+        <!-- AI TRiSM NOTE -->
+        <div style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.15);border-radius:10px;padding:16px;margin-top:16px;">
+          <div style="font-size:10px;color:var(--cyan);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">AI TRiSM Framework</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.65;">Multi-modal biometric fusion — combining facial geometry, micro-expression analysis, and behavioral keystroke dynamics — reduces Deepfake KYC bypass rate from 18% to &lt;2%. NIST AI RMF Govern 1.1 compliant.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- THREAT LANDSCAPE -->
+    <div style="background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:32px;margin-bottom:28px;">
+      <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:24px;">AI Fraud Threat Landscape — India 2026</h3>
+      <div class="grid-2">
+        <div>
+          <div class="threat-item">
+            <div class="threat-title">Deepfake Face Injection</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">GAN-generated face overlaid on live Video-KYC stream via OBS pipeline. Bypasses passive liveness detection in 18% of cases.</div>
+            <div class="threat-bar-wrap">
+              <div class="prog-label"><span style="font-size:12px">Detection Coverage</span><span style="color:var(--red)">82%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="82" style="background:var(--red)"></div></div>
+            </div>
+          </div>
+          <div class="threat-item">
+            <div class="threat-title">AI Document Forgery</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">LLM-generated document metadata that passes OCR verification but fails forensic analysis. Aadhaar XML manipulation in 12% of cases.</div>
+            <div class="threat-bar-wrap">
+              <div class="prog-label"><span style="font-size:12px">Detection Coverage</span><span style="color:var(--gold)">66%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="66" style="background:var(--gold)"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="threat-item">
+            <div class="threat-title">Session Hijacking (WebRTC)</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">MITM interception of WebRTC video stream enabling real-time face substitution without KYC agent awareness.</div>
+            <div class="threat-bar-wrap">
+              <div class="prog-label"><span style="font-size:12px">Detection Coverage</span><span style="color:var(--cyan)">62%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="62" style="background:var(--cyan)"></div></div>
+            </div>
+          </div>
+          <div class="threat-item">
+            <div class="threat-title">Synthetic Voice Cloning</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">AI voice cloning for phone-based KYC. Current spectral analysis detects 71% of synthetic voices — leaving a 29% gap.</div>
+            <div class="threat-bar-wrap">
+              <div class="prog-label"><span style="font-size:12px">Detection Coverage</span><span style="color:var(--green)">71%</span></div>
+              <div class="prog-track"><div class="prog-fill" data-val="71" style="background:var(--green)"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXEC ABSTRACT -->
+    <div class="exec-box" style="background:rgba(34,211,238,0.04);border:1px solid rgba(34,211,238,0.15);">
+      <span class="tag tag-cyan" style="margin-bottom:16px;">Executive Abstract · AI TRiSM</span>
+      <p>The convergence of Generative AI with financial crime creates an unprecedented threat surface for India's digital banking ecosystem. Deepfake-enabled fraud has grown 340% YoY, with Video-KYC representing the most critical vulnerability: current liveness detection models exhibit an 18% false-negative rate against GAN-generated face injections — a gap that sophisticated criminal networks are actively exploiting at scale.</p>
+      <p>FinWithDip's Agentic AI Fraud Defense framework is built on the NIST AI Risk Management Framework (AI RMF) and Gartner's AI TRiSM (Trust, Risk, and Security Management) model. The architecture layers behavioral biometrics, transaction graph analysis, and multi-modal liveness verification to reduce the attack surface across the entire customer lifecycle — from Video-KYC onboarding to real-time UPI transaction monitoring.</p>
+      <p>For Indian banks, the regulatory imperative is clear: RBI's circular on Digital Payment Security Controls (2024) mandates AI-powered fraud detection for institutions processing &gt;₹1KCr monthly. Non-compliance carries both direct financial penalties and reputational CASA attrition, estimated at ₹180Cr per major fraud event. AI TRiSM adoption is a non-negotiable element of the modern BFSI risk architecture.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:4px;">Fin<span class="grad">WithDip</span></div>
+      <div style="font-size:12px;color:var(--muted);">BFSI Strategy · Technology · Intelligence · 2026–27</div>
+    </div>
+    <div class="footer-note">All data is simulated for demonstration purposes only.</div>
+    <div class="footer-links">
+      <a href="index.html"     class="footer-link">Home</a>
+      <a href="dashboard.html" class="footer-link">Dashboard</a>
+      <a href="silver.html"    class="footer-link">Silver Economy</a>
+      <a href="esg.html"       class="footer-link">ESG Audit</a>
+      <a href="fraud.html"     class="footer-link">AI Fraud</a>
+      <a href="cases.html"     class="footer-link">Case Studies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+// ── VULNERABILITY LIST ──
+const vulns = [
+  {name:'GAN Face Injection', sev:'Critical', coverage:'82% detected', tagClass:'tag-high', desc:'Real-time deepfake face overlaid on Video-KYC stream via OBS/FFmpeg. Current liveness checks pass at 18% false-negative rate against latest GAN architectures.'},
+  {name:'Document Forgery (AI)', sev:'High', coverage:'66% detected', tagClass:'tag-high', desc:'LLM-generated document metadata that passes OCR but fails forensic analysis. Aadhaar XML manipulation detected in 12% of reviewed cases.'},
+  {name:'Session Hijacking', sev:'High', coverage:'62% detected', tagClass:'tag-high', desc:'MITM interception of WebRTC video stream enabling real-time face substitution without awareness of the KYC agent.'},
+  {name:'Synthetic Voice Clone', sev:'Medium', coverage:'71% detected', tagClass:'tag-med', desc:'AI voice cloning for phone-based KYC verification. Current spectral analysis detects 71% of synthetic voices — 29% gap persists.'},
+];
+const vl = document.getElementById('vuln-list');
+vulns.forEach(v => {
+  vl.innerHTML += `
+    <div class="vuln-card">
+      <div class="vuln-header">
+        <span class="vuln-name">${v.name}</span>
+        <span class="tag ${v.tagClass}">${v.sev}</span>
+      </div>
+      <div class="vuln-coverage">Detection: ${v.coverage}</div>
+      <div class="vuln-desc">${v.desc}</div>
+    </div>`;
+});
+
+// ── TRANSACTION ANALYZER ──
+const txSteps = ['Parsing transaction metadata...','Checking behavioral baseline...','Running anomaly detection model...','Generating verdict...'];
+
+function analyzeTx() {
+  const amt  = parseFloat(document.getElementById('tx-amount').value) || 0;
+  const pat  = document.getElementById('tx-pattern').value;
+  const btn  = document.getElementById('tx-btn');
+  const ldr  = document.getElementById('tx-loading');
+  const res  = document.getElementById('tx-result');
+
+  if (!amt) { alert('Please enter a transaction amount.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '⟳ Analyzing...';
+  res.classList.remove('visible');
+  ldr.style.display = 'block';
+  ldr.innerHTML = '';
+
+  txSteps.forEach((s,i) => {
+    setTimeout(() => {
+      ldr.innerHTML += `<div class="loading-row" style="animation:fadeUp 0.4s ease forwards"><div class="loading-dot"></div><span class="loading-text">${s}</span></div>`;
+    }, i*380);
+  });
+
+  setTimeout(() => {
+    ldr.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = '▶ Analyze Transaction';
+
+    const suspicious = amt > 50000 || pat === 'Round Amount' || pat === 'Rapid Succession' || pat === 'New Beneficiary Large';
+    const confidence = suspicious ? (72 + Math.floor(Math.random()*24)) : (85 + Math.floor(Math.random()*12));
+    const flags = suspicious
+      ? [
+          amt > 50000 ? 'High-value transaction requiring enhanced verification' : null,
+          pat === 'Round Amount' ? 'Round-number pattern — common structuring indicator' : null,
+          pat === 'Rapid Succession' ? 'Velocity anomaly: multiple transactions within 60 seconds' : null,
+          pat === 'New Beneficiary Large' ? 'First transaction to beneficiary exceeds ₹25,000 threshold' : null,
+          'Flagged for 4-hour cooling period under RBI circular',
+        ].filter(Boolean)
+      : [
+          'No anomalous patterns detected',
+          'Beneficiary present in historical transaction graph',
+          'Amount within normal behavior band (±2σ)',
+        ];
+    const action = suspicious
+      ? 'Flag for review · Notify registered mobile · Apply 4-hour cooling period'
+      : 'Clear for processing — no intervention required';
+
+    const vBox = document.getElementById('verdict-box');
+    vBox.className = suspicious ? 'verdict-danger' : 'verdict-safe';
+    document.getElementById('verdict-label').style.color = suspicious ? 'var(--red)' : 'var(--green)';
+    document.getElementById('verdict-label').textContent  = suspicious ? '⚠️ Suspicious' : '✅ Safe';
+    document.getElementById('verdict-confidence').textContent = confidence + '% confidence';
+    document.getElementById('verdict-action').textContent = 'Action: ' + action;
+
+    const vf = document.getElementById('verdict-flags');
+    vf.innerHTML = flags.map(f => `
+      <div class="flag-row">
+        <span style="color:${suspicious?'var(--red)':'var(--green)'};flex-shrink:0">→</span>
+        <span>${f}</span>
+      </div>`).join('');
+
+    res.classList.add('visible');
+  }, txSteps.length*380 + 400);
+}
+function downloadFraudReport(){
+
+  const report = `
+FINWITHDIP — FRAUD ANALYSIS REPORT
+==================================
+
+Threat Level: HIGH
+Detection Rate: 94%
+Deepfake Growth: 340% YoY
+UPI Fraud Exposure: ₹8.7KCr
+
+KEY RISKS
+----------
+• GAN face injection
+• AI document forgery
+• Session hijacking
+• Voice cloning attacks
+
+RECOMMENDATIONS
+----------------
+1. Multi-modal liveness detection
+2. Behavioral AI monitoring
+3. Device fingerprint verification
+4. Real-time anomaly scoring
+
+Generated by FinWithDip AI Fraud Defense
+`;
+
+  const blob = new Blob([report], {
+    type:'text/plain'
+  });
+
+  const a = document.createElement('a');
+
+  a.href = URL.createObjectURL(blob);
+
+  a.download = 'FinWithDip_Fraud_Report.txt';
+
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
